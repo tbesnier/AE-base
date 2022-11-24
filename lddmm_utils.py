@@ -121,8 +121,6 @@ def lossVarifoldSurf(FS, VT, FT, K):
         length = (normals ** 2).sum(dim=1)[:, None].sqrt()
         return centers, length, normals / length
 
-    print(VT.shape)
-    print(FT.shape)
     CT, LT, NTn = get_center_length_normal(FT, VT)
     cst = (LT * K(CT, CT, NTn, NTn, LT)).sum()
 
