@@ -3,6 +3,15 @@ import os
 import numpy as np
 import trimesh
 from tqdm import tqdm
+import os, argparse
+
+parser = argparse.ArgumentParser(description='Arguments for results viz')
+parser.add_argument('-m','--model', type=str,
+            help='model')
+parser.add_argument('-l','--latent_size', type=str,
+            help='size of latent space')
+
+args = parser.parse_args()
 
 def save_viz(dest, path):
     if os.path.exists(path):
@@ -26,8 +35,8 @@ def save_viz_bad(dest, path):
 tri = trimesh.load('../Data/COMA/template/template.obj', process=False)
 triangles=tri.faces
 
-model = 'pointnet_original'
-latent = 128
+model = args.model
+latent = args.latent_size
 folder = '../Data/COMA/results_identity/{0}_autoencoder/latent_{1}'.format(model, latent)
 
 dest = os.path.join(folder, 'viz_predictions')

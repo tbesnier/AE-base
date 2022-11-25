@@ -25,14 +25,14 @@ if __name__ == '__main__':
     print(target)
     train_coma=[]
     test_coma=[]
-    data_path="COMA"
+    data_path= "../datasets/COMA/"
 
     count=0
     subjs = [f for f in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, f))]
     for subjdir in subjs:
         count=count+1
         subject = ids.index(subjdir)
-        print(subject, subjdir)
+        #print(subject, subjdir)
         for expr_dir in os.listdir(os.path.join(data_path, subjdir)):
             cc=0
             if target:
@@ -40,7 +40,7 @@ if __name__ == '__main__':
                     data_loaded = trimesh.load(os.path.join(data_path, subjdir, expr_dir, mesh), process=False)
                     vertices = data_loaded.vertices
                     if subject == test_label:
-                        print(subject, subjdir)
+                        #print(subject, subjdir)
                         test_coma.append(vertices)
                     else:
                         train_coma.append(vertices)
@@ -62,14 +62,14 @@ if __name__ == '__main__':
     print(np.shape(test_coma))
 
     if not target:
-        if not os.path.exists(os.path.join('Data', 'COMA', 'preprocessed_neutral')):
-            os.makedirs(os.path.join('Data', 'COMA', 'preprocessed_neutral'))
-        np.save('./Data/COMA/preprocessed_neutral/train.npy', train_coma)
-        np.save('./Data/COMA/preprocessed_neutral/test.npy', test_coma)
+        if not os.path.exists(os.path.join('../', 'Data', 'COMA', 'preprocessed_neutral')):
+            os.makedirs(os.path.join('../', 'Data', 'COMA', 'preprocessed_neutral'))
+        np.save('../Data/COMA/preprocessed_neutral/train.npy', train_coma)
+        np.save('../Data/COMA/preprocessed_neutral/test.npy', test_coma)
     else:
-        if not os.path.exists(os.path.join('Data', 'COMA', 'preprocessed_identity')):
-            os.makedirs(os.path.join('Data', 'COMA', 'preprocessed_identity'))
-        np.save('./Data/COMA/preprocessed_identity/train.npy', train_coma)
-        np.save('./Data/COMA/preprocessed_identity/test.npy', test_coma)
+        if not os.path.exists(os.path.join('../Data', 'COMA', 'preprocessed_identity')):
+            os.makedirs(os.path.join('../Data', 'COMA', 'preprocessed_identity'))
+        np.save('../Data/COMA/preprocessed_identity/train.npy', train_coma)
+        np.save('../Data/COMA/preprocessed_identity/test.npy', test_coma)
 
 

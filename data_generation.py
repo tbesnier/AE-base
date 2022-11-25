@@ -20,7 +20,7 @@ root_dir = args.root_dir
 dataset = args.dataset
 name = ''
 
-data = os.path.join(root_dir, dataset, 'preprocessed',name)
+data = os.path.join(root_dir, dataset, 'preprocessed_identity',name)
 train = np.load(data+'train.npy')
 
 if not os.path.exists(os.path.join(data,'points_train')):
