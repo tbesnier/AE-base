@@ -56,7 +56,7 @@ if __name__ == '__main__':
                         else:
                            train_coma.append(vertices)
 
-
+    #train_coma = train_coma[:100]
     print(np.shape(train_coma))
     print(np.shape(test_coma))
 

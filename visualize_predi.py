@@ -10,6 +10,8 @@ parser.add_argument('-m','--model', type=str,
             help='model')
 parser.add_argument('-l','--latent_size', type=str,
             help='size of latent space')
+parser.add_argument('-t','--see_train', type=bool, default=False,
+            help='viz training sample')
 
 args = parser.parse_args()
 
@@ -46,3 +48,8 @@ save_viz(dest, os.path.join(folder, 'predictions/predictions.npy'))
 dest = os.path.join(folder, 'viz_targets')
 os.makedirs(dest, exist_ok=True)
 save_viz(dest, os.path.join(folder, 'predictions/targets.npy'))
+
+if args.see_train:
+    dest = os.path.join(folder, 'viz_train')
+    os.makedirs(dest, exist_ok=True)
+    save_viz(dest, '../Data/COMA/preprocessed_identity_pointnet_original/points_train/0.npy')
