@@ -4,13 +4,12 @@ import os, argparse
 from tqdm import tqdm
 
 
-ids = ['FaceTalk_170725_00137_TA', 'FaceTalk_170728_03272_TA', 'FaceTalk_170731_00024_TA', 'FaceTalk_170809_00138_TA',
-       'FaceTalk_170811_03274_TA', 'FaceTalk_170811_03275_TA', 'FaceTalk_170904_00128_TA', 'FaceTalk_170904_03276_TA',
-       'FaceTalk_170908_03277_TA', 'FaceTalk_170912_03278_TA', 'FaceTalk_170913_03279_TA', 'FaceTalk_170915_00223_TA']
+ids = ['FaceTalk_170725_00137_TA', 'FaceTalk_170728_03272_TA']
+#       'FaceTalk_170811_03274_TA', 'FaceTalk_170811_03275_TA', 'FaceTalk_170904_00128_TA', 'FaceTalk_170904_03276_TA',
+#      'FaceTalk_170908_03277_TA', 'FaceTalk_170912_03278_TA', 'FaceTalk_170913_03279_TA', 'FaceTalk_170915_00223_TA']
 
 
 if __name__ == '__main__':
-
 
     parser = argparse.ArgumentParser(description='Arguments for dataset split')
     parser.add_argument('-d','--test_label', type=int,
@@ -24,7 +23,7 @@ if __name__ == '__main__':
     target = bool(args.target)
     train_coma=[]
     test_coma=[]
-    data_path= "../datasets/COMA/"
+    data_path= "../datasets/COMA_2/"
 
     count=0
     subjs = [f for f in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, f))]

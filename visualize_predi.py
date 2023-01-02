@@ -52,4 +52,10 @@ save_viz(dest, os.path.join(folder, 'predictions/targets.npy'))
 if args.see_train:
     dest = os.path.join(folder, 'viz_train')
     os.makedirs(dest, exist_ok=True)
-    save_viz(dest, '../Data/COMA/preprocessed_identity_pointnet_original/points_train/0.npy')
+    path = '../Data/COMA/preprocessed_identity_pointnet_original/points_test/0.npy'
+    if os.path.exists(path):
+        ours = np.load(path)
+        tri_mesh = trimesh.Trimesh(np.asarray(np.squeeze(ours[:, :3])), np.asarray(triangles), process=False)
+        tri_mesh.export(os.path.join(dest, "train.ply"))
+    else:
+        print("This predictions does not exist")

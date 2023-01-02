@@ -10,7 +10,6 @@ def GaussKernel(sigma):
     gamma = 1 / (sigma * sigma)
     D2 = x.sqdist(y)
     K = (-D2 * gamma).exp()
-    # print((K * b).sum_reduction(axis=1))
     return (K * b).sum_reduction(axis=1)
 
 
@@ -20,7 +19,14 @@ def GaussKernel(sigma):
 def GaussLinKernel(sigma):
     x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
     gamma = 1 / (sigma * sigma)
-    D2 = x.sqdist(y)
+    D2 = (y - x)**2
+    K = (-D2 * gamma).exp() * (u * v).sum() ** 2
+    return (K * b).sum_reduction(axis=1)
+
+def LaplaceLinKernel(sigma):
+    x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
+    gamma = 1 / (sigma * sigma)
+    D2 = ((y - x)**2).sqrt()
     K = (-D2 * gamma).exp() * (u * v).sum() ** 2
     return (K * b).sum_reduction(axis=1)
 
