@@ -16,12 +16,25 @@ def GaussKernel(sigma):
 ###################################################################
 # Define "Gaussian-CauchyBinet" kernel :math:`(K(x,y,u,v)b)_i = \sum_j \exp(-\gamma\|x_i-y_j\|^2) \langle u_i,v_j\rangle^2 b_j`
 
-def GaussLinKernel(sigma):
+def GaussLinKernel_current(sigma):
     x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
     gamma = 1 / (sigma * sigma)
     D2 = (y - x)**2
     K = (-D2 * gamma).exp() * (u * v).sum()
-    #K = (-D2 * gamma).exp() * (u * v).sum() ** 2
+    return (K * b).sum_reduction(axis=1)
+
+def GaussLinKernel_varifold(sigma):
+    x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
+    gamma = 1 / (sigma * sigma)
+    D2 = (y - x)**2
+    K = (-D2 * gamma).exp() * (u * v).sum() ** 2
+    return (K * b).sum_reduction(axis=1)
+
+def GaussLinKernel_varifold_oriented(sigma):
+    x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
+    gamma = 1 / (sigma * sigma)
+    D2 = (y - x)**2
+    K = (-D2 * gamma).exp() * (u * v).abs().sum()
     return (K * b).sum_reduction(axis=1)
 
 def LaplaceLinKernel(sigma):

@@ -2,8 +2,6 @@ from tqdm import tqdm
 import numpy as np
 import os, argparse
 
-
-
 parser = argparse.ArgumentParser(description='Arguments for dataset split')
 parser.add_argument('-r','--root_dir', type=str,
             help='Root data directory location, should be same as in neural3dmm.ipynb')

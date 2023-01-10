@@ -50,7 +50,7 @@ def read_COMA_label(char_label):
 
 train_coma=[]
 test_coma=[]
-data_path="C:/Users/mrtho/Desktop/Centrale/G3/Projet/DL_geometric/neural3dmm_projet_integration/COMA"
+data_path="..datasets/COMA"
 count=0
 for subjdir in os.listdir(data_path):
    print(subjdir)
@@ -80,12 +80,12 @@ print(np.shape(train_coma))
 print(np.shape(test_coma))
 
 if not target:
-    if not os.path.exists(os.path.join('Data', 'COMA', 'preprocessed_neutral')):
-        os.makedirs(os.path.join('Data', 'COMA', 'preprocessed_neutral'))
-    np.save('./Data/COMA/preprocessed_neutral/train.npy', train_coma)
-    np.save('./Data/COMA/preprocessed_neutral/test.npy', test_coma)
+    if not os.path.exists(os.path.join('Data', 'COMA', 'preprocessed_neutral_expr_pointnet_original')):
+        os.makedirs(os.path.join('Data', 'COMA', 'preprocessed_neutral_expr_pointnet_original'))
+    np.save('./Data/COMA/preprocessed_neutral_expr_pointnet_original/train.npy', train_coma)
+    np.save('./Data/COMA/preprocessed_neutral_expr_pointnet_original/test.npy', test_coma)
 else:
-    if not os.path.exists(os.path.join('Data', 'COMA', 'preprocessed')):
+    if not os.path.exists(os.path.join('Data', 'COMA', 'preprocessed_expr_pointnet_original')):
         os.makedirs(os.path.join('Data', 'COMA', 'preprocessed'))
-    np.save('./Data/COMA/preprocessed/train.npy', train_coma)
-    np.save('./Data/COMA/preprocessed/test.npy', test_coma)
+    np.save('./Data/COMA/preprocessed_expr_pointnet_original/train.npy', train_coma)
+    np.save('./Data/COMA/preprocessed_expr_pointnet_original/test.npy', test_coma)

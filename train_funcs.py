@@ -8,6 +8,8 @@ def train_autoencoder_dataloader(dataloader_train, dataloader_val,
                                  bsize, start_epoch, n_epochs, eval_freq, scheduler = None,
                                  writer=None, save_recons=True, shapedata = None,
                                  metadata_dir=None, samples_dir = None, checkpoint_path = None):
+
+
     if not shapedata.normalization:
         shapedata_mean = torch.Tensor(shapedata.mean).to(device)
         shapedata_std = torch.Tensor(shapedata.std).to(device)
@@ -103,7 +105,7 @@ def train_autoencoder_dataloader(dataloader_train, dataloader_val,
             'scheduler_state_dict': scheduler.state_dict(),
         },os.path.join(metadata_dir, checkpoint_path+'.pth.tar'))
         
-        if epoch % 10 == 0:
+        if epoch % 1 == 0:
             torch.save({'epoch': epoch,
             'autoencoder_state_dict': model.state_dict(),
             'optimizer_state_dict' : optim.state_dict(),
