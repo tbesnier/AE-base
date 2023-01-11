@@ -25,7 +25,7 @@ if __name__ == '__main__':
     print(target)
     train_coma=[]
     test_coma=[]
-    data_path= "../datasets/COMA_2/"
+    data_path= "../datasets/COMA/"
 
     count=0
     subjs = [f for f in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, f))]

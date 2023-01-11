@@ -139,7 +139,7 @@ def lossVarifoldSurf(FS, VT, FT, K):
         )
         centers, normals = (V0 + V1 + V2) / 3, 0.5 * torch.cross(V1 - V0, V2 - V0)
         length = (normals ** 2).sum(dim=1)[:, None].sqrt()
-        return centers, length, normals / length
+        return centers, length, normals / (length + 1e-21)
 
     CT, LT, NTn = get_center_length_normal(FT, VT)
     cst = (LT * K(CT, CT, NTn, NTn, LT)).sum()
