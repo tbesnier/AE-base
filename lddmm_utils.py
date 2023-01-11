@@ -3,6 +3,7 @@ from torch.autograd import grad
 import numpy as np
 
 from pykeops.torch import Vi, Vj
+from geomloss import SamplesLoss
 
 
 def GaussKernel(sigma):
@@ -37,7 +38,7 @@ def GaussLinKernel_varifold_oriented(sigma):
     K = (-D2 * gamma).exp() * (u * v).abs().sum()
     return (K * b).sum_reduction(axis=1)
 
-def LaplaceLinKernel(sigma):
+def LaplaceLinKernel_varifold_oriented(sigma):
     x, y, u, v, b = Vi(0, 3), Vj(1, 3), Vi(2, 3), Vj(3, 3), Vj(4, 1)
     gamma = 1 / (sigma * sigma)
     D2 = ((y - x)**2).sqrt()
@@ -151,5 +152,37 @@ def lossVarifoldSurf(FS, VT, FT, K):
                 + (LS * K(CS, CS, NSn, NSn, LS)).sum()
                 - 2 * (LS * K(CS, CT, NSn, NTn, LT)).sum()
         )
+
+    return loss
+
+def lossOTSurf(FS, VT, FT):
+    """Compute varifold distance between two meshes
+    Input:
+        - FS: face connectivity of source mesh
+        - VT: vertices of target mesh [nVx3 torch tensor]
+        - FT: face connectivity of target mesh [nFx3 torch tensor]
+        - K: kernel
+    Output:
+        - loss: function taking VS (vertices coordinates of source mesh)
+    """
+    
+    Loss = SamplesLoss("sinkhorn", p=1, blur=50, scaling=0.9, truncate=1) #p=1 ou p=2
+    
+    def get_center_area(F, V):
+        V0, V1, V2 = (
+            V.index_select(0, F[:, 0]),
+            V.index_select(0, F[:, 1]),
+            V.index_select(0, F[:, 2]),
+        )
+        centers, normals = (V0 + V1 + V2) / 3, 0.5 * torch.cross(V1 - V0, V2 - V0)
+        areas = (normals ** 2).sum(dim=1)[:, None].sqrt()
+        return centers, areas
+
+    centerT, areaT = get_center_area(FT, VT)
+    
+
+    def loss(VS):
+        centerS, areaS = get_center_area(FS, VS)
+        return Loss(areaT, centerT, areaS, centerS)
 
     return loss
